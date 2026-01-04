@@ -1,0 +1,430 @@
+LLM Usage has been declared with the entire prompt and the response of the LLM. Below is the recorded result.
+
+Prompt:
+
+Role: You are an expert in handling markdown and python Jupyter notebooks. You are also well aware of the markdown structure that python Jupyter notebooks use and you are an expert in this field.
+
+Context: You are being given a Jupyter notebook content in plain text in the following format. First is the markdown cell content and followed by the code in the code cell. Markdown content explains the code inside the code cell and gives an overview of what the code is exactly doing. With this context you must perform the following task.
+
+Task: You must use the content inside of the markdown cell and the code inside the code cell and make sure that there is a connection between the mardown content and the code. If case if the code and the markdown is making sense move on to the next part of the content. In case not, do not change my work, since I have to maintain originality of my content. In case if the markdown  and the code is not making sense then you have to give me reasons as to why they are not making sense. 
+
+Next part is formatting the markdown cell contents. In this part of the task, you must segeregate the headings and subheading and the content and then you have to format them to be visually appealing. In case there are any grammatical errors I want you to fix them. Use good colouring format if required and make it attractive and visually appealing. In case any information that you think is critical is missing I want you to ask me this piece of information and take my input, to reiterate I want to maintain the originality of this project contents. AI can only be an assisstant so all the content must come from me. 
+
+In the last part I want you to draft a last markdown content that has the ending part which involves the following info:
+This project was made by Sathwik Nagasundra Sharma(s.nagasundra-sharma@oth-aw.de) and Sai Surya Alla(s.alla@oth-aw.de)
+A short summary of the jupyter notebook 
+A short acknowledgement thanking Prof. Dr. Sandra Rebholz and Prof. Dr.-Ing. Alexander Prinz for providing this project oppurtunity and stack overflow and reddit forums for supporting in troubleshooting issues and LLM for supporting in content improvisation.
+A link to the github repository - for now go ahead and place the link as www.github.com/Sath/PRS
+A link to the references page - for now go ahead and place the link as www.github.com/Sath/PRS/references
+A link to the AI/LLM Usage Declaration document - for now go ahead and place the link as www.github.com/Sath/PRS/AI and LLM Usage Declaration document
+
+ 
+Format:
+
+The output must be only the markdown cells which are formatted and ready to be pasted in the markdown cells of the Jupyter notebook.
+
+Here is the markdown and code 
+
+Markup 1 :
+
+This section ensures that all the required libraries to run the ollowing functions are installed. The required Pzthon libraries are as follows:
+pandas: Core library for data manipulation and analysis (DataFrames).
+numpy: Fundamental package for numerical computing (arrays and mathematical functions).
+matplotlib: Comprehensive library for creating static, animated, and interactive visualizations.
+seaborn: Statistical data visualization library based on matplotlib.
+geopandas: Extends pandas to allow spatial operations on geometric types (geospatial data).
+folium: Library for visualizing geospatial data on an interactive leaflet map.
+
+Cell 1 :
+
+!pip install pandas numpy matplotlib seaborn scikit-learn geopandas folium
+
+
+Markup 2 :
+
+This section imports all the necessary packages installed in the previous cell and reads the data set from the CSV file ev_charging_germany.csv into a Pandas Data frame. 
+It also contains a test display function to make sure that the loaded data is proper. 
+This function displays the first five rows with which the content and structure of the data can be easily verified. 
+This is an option step, but crucial for a test run. 
+
+Cell 2 :
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import geopandas as gpd
+import folium
+pd.set_option("display.max_columns", None)
+df = pd.read_csv("ev_charging_germany.csv", sep=";", encoding="utf-8")
+df.head()
+
+Markup 	3 :
+
+This section consists of a function that totals the number of charging stations (Ladepunkte) per state (Bundesland) in Germany.
+The result is stored in a pandas series sorted in descending order.
+
+Cell 3:
+
+def count_stations_per_state(df):
+    """
+    Calculates the number of weather stations in each German state ("Bundesland").
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+    Returns:
+        pd.Series: A Series showing the count of stations per state, sorted in descending order.
+    """
+    stations_per_state = df["Bundesland"].value_counts().sort_values(ascending=False)
+    return stations_per_state
+
+def plot_stations_per_state(state_counts):
+    """
+    Generates a horizontal bar plot showing the distribution of charging stations across German states.
+    Args:
+        state_counts (pd.Series): A Series showing the count of stations per state, sorted in descending order.
+    Returns:
+        None: Displays the Matplotlib plot.
+    """
+    plt.figure(figsize=(12, 6))
+    sns.barplot(x=state_counts.values, y=state_counts.index, palette="viridis")
+    plt.title("Charging Stations per German State")
+    plt.xlabel("Number of Stations")
+    plt.ylabel("State")
+    plt.show()
+
+
+Markup 4 :
+
+This is a continuation if the above section. 
+In the previous section only the pandas series was printed as output, but in this section, there exists a function that takes in the pandas series as input and generated a bar graph using matplotlib and seaborn libraries from highest to lowest. 
+
+Cell 4 :
+
+#Function calls
+state_counts = count_stations_per_state(df)
+print(state_counts)
+plot_stations_per_state(state_counts)
+
+Markup 5 :
+
+This section of a code has a function that takes a pandas series as a parameter and does the following things:
+Data Transformation: The state station counts are converted from a pandas Series back into a DataFrame and renamed.
+Statistical Summary: The state with the maximum and minimum number of charging stations is identified and printed.
+Geospatial Mapping: The function fetches a GeoJSON file containing the boundaries of all German states, merges this geographical data with the station counts, and generates a choropleth map. 
+Darker colors on the map indicate a higher concentration of charging stations.
+
+Cell 5 :
+
+df = pd.read_csv("ev_charging_germany.csv", sep=";", encoding="utf-8")
+def summarize_station_extremes(df):
+    """
+    Calculates and prints the German states with the maximum and minimum number of charging stations.
+    Args:
+        df (pd.DataFrame): The input DataFrame containing the raw station data, which must include a column named 'Bundesland'.
+    Returns:
+        None: Prints the results directly to the console.
+    """
+    #df = pd.read_csv("ev_charging_germany.csv", sep=";", encoding="utf-8")
+    stations_per_state = df["Bundesland"].value_counts().rename("count").reset_index()
+    stations_per_state.columns = ["name", "count"]
+    
+    max_state = stations_per_state.iloc[0]
+    min_state = stations_per_state.iloc[-1]
+    
+    print(f"State with most charging stations: {max_state['name']} ({int(max_state['count'])} stations)")
+    print(f"State with least charging stations: {min_state['name']} ({int(min_state['count'])} stations)")
+
+def show_distribution_of_charging_stations(df):
+    """
+    Generates a Choropleth map visualizing the geographical distribution and density of charging stations across German states ('Bundeslaender').
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+    Returns:
+        None: Displays the Matplotlib Choropleth map directly to the notebook output.
+    """
+    
+    geojson_url = "https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/master/2_bundeslaender/1_sehr_hoch.geo.json"
+    bundeslaender = gpd.read_file(geojson_url)
+    
+    merged = bundeslaender.merge(stations_per_state, on="name", how="left")
+    merged["count"] = merged["count"].fillna(0)  # filling in missing states with 0 value
+    
+    plt.figure(figsize=(12, 14))
+    ax = merged.plot(column="count", cmap="viridis", legend=True, edgecolor="black")
+    plt.title("Charging Station Density by German State", fontsize=16)
+    plt.axis("off")
+    plt.show()
+
+show_distribution_of_charging_stations(df)
+summarize_station_extremes(df)
+
+
+Markup 6 :
+
+This section contains a function that didis the following:
+The first function filters the given data set to exclude the four major cities namingly - Berlin, Hamburg, Munich and Cologne and print the city that has the highest EV charging station. 
+This function targets to identify medium or small cities that have decent EV Innfrastructure. 
+The second function focus more on the data of the city Amberg. 
+It gives the total number of charging stations and also gives the total maximum installed charging power. 
+Additionally it also prints an interactive folium map and marks down the exact locations in the city where these EV Charging stations are present. 
+
+Cell 6 :
+
+def find_top_city_excluding_majors(df, excluded_cities):
+    """
+    Filters the DataFrame to exclude specified major German cities, then finds and prints the city with the highest number of charging stations among the remaining cities.
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+        excluded_cities (list): A list of strings representing the cities to exclude from the analysis (e.g., ["Berlin", "München"]).
+    Returns:
+        None: Prints the result directly to the console.
+    """
+    filtered_df = df[~df["Ort"].isin(excluded_cities)]
+
+    city_counts = filtered_df["Ort"].value_counts().reset_index()
+    city_counts.columns = ["city", "station_count"]
+
+    top_city = city_counts.iloc[0].to_dict()
+
+    exclusion_str = ", ".join(excluded_cities)
+
+    print("City with most charging stations (excluding " + exclusion_str + "): " + top_city['city'] + " (" + str(int(top_city['station_count'])) + " stations)")
+
+
+def summarize_amberg_stats(df, city_name="Amberg"):
+    """
+    Calculates and prints the total station count and maximum installed charging power for a specified city.
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+    Returns:
+        tuple: A tuple containing (station_count, max_power_kW).
+    """
+    amberg_df = df[df["Ort"] == city_name]
+
+    amberg_station_count = len(amberg_df)
+    amberg_max_power = amberg_df["InstallierteLadeleistungNLL"].sum()
+
+    print("\n" + city_name + " total stations: " + str(amberg_station_count))
+    print(city_name + " total maximum charging power (kW): " + str(amberg_max_power))
+    
+    #return amberg_station_count, amberg_max_power
+
+
+def plot_amberg_stations(df, city_name="Amberg", center_coords=[49.4478, 11.8583], zoom=13):
+    """
+    Generates an interactive Folium map visualizing the location of charging stations within a specified city.
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+    Returns:
+        folium.Map: The generated interactive map object.
+    """
+
+    amberg_df = df[df["Ort"] == city_name]
+    
+
+    amberg_map = folium.Map(location=center_coords, zoom_start=zoom)
+
+
+    for _, row in amberg_df.iterrows():
+        popup_text = row['Betreiber'] + " (" + str(row['InstallierteLadeleistungNLL']) + " kW)"
+        
+        folium.CircleMarker(
+            location=[row["Breitengrad"], row["Laengengrad"]],
+            radius=5,
+            popup=popup_text,
+            color="blue",
+            fill=True
+        ).add_to(amberg_map)
+
+    return amberg_map
+
+excluded_cities = ["Berlin", "Hamburg", "München", "Munich", "Köln", "Cologne"]
+find_top_city_excluding_majors(df, excluded_cities)
+summarize_amberg_stats(df)
+plot_amberg_stations(df)
+
+Markup 7 :
+
+This final section visualizes the operators who contribute to Germany’s EV Charging Infrastructure. The function does the following:
+Groups the data by operator
+Adds the total number of charging points for each 
+Sorts the list in descending order and picks the top 5 
+Prints the result and visualizes using a horizontal bar plot
+
+Cell 7 :
+
+def find_top_operators(df):
+    """
+    Prints the top 5 operators and their total number of charginf points throughout Germany
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+        
+    Returns:
+        None: Prints the result directly to the console.
+    """
+    top_operators = (
+        df.groupby("Betreiber")["AnzahlLadepunkteNLL"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(5)
+    )
+    
+    
+    print("Top 5 Charging Station Operators in Germany:")
+    for i, (operator, points) in enumerate(top_operators.items(), 1):
+        print(f"{i}. {operator}: {points} vehicles can be charged at once")
+
+def plot_top_operators(df):
+    """
+    Calculates the top 5 charging station operators based on the total number of charging points ('AnzahlLadepunkteNLL') they operate and generates a horizontal bar plot to visualize the results.
+    Args:
+        df (pd.DataFrame): The input DataFrame containing weather station data.
+    Returns:
+        None: Displays the Matplotlib plot directly to the console/notebook output.
+    """
+    top_operators = (
+        df.groupby("Betreiber")["AnzahlLadepunkteNLL"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(5)
+    )
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x=top_operators.values, y=top_operators.index, palette="magma")
+    plt.title("Top 5 Charging Station Operators in Germany (Total Vehicles Charged at Once)", fontsize=14)
+    plt.xlabel("Total Charging Points")
+    plt.ylabel("Operator")
+    plt.show()
+
+
+find_top_operators(df)
+plot_top_operators(df)
+
+
+Prompt Response:
+
+Formatted Markup 1
+Markdown
+
+# 🛠️ Setup and Library Installation
+
+This initial section ensures that all the **required Python libraries** for running the subsequent analysis and visualization functions are installed in the current environment.
+
+The essential libraries used in this project are:
+
+* **`pandas`**: The core library for efficient data manipulation and analysis, primarily through DataFrames.
+* **`numpy`**: The fundamental package for numerical computing, used for working with arrays and mathematical functions.
+* **`matplotlib`**: A comprehensive library for creating static, animated, and interactive visualizations.
+* **`seaborn`**: A statistical data visualization library based on Matplotlib, providing a high-level interface for drawing attractive statistical graphics.
+* **`geopandas`**: Extends pandas to enable spatial operations on geometric types, crucial for handling and analyzing geospatial data.
+* **`folium`**: A powerful library for visualizing geospatial data on an interactive Leaflet map.
+Formatted Markup 2
+Markdown
+
+# 📥 Data Import and Initial Inspection
+
+This section performs two critical steps:
+
+1.  **Package Import**: Imports all necessary Python packages installed in the previous step.
+2.  **Data Loading**: Reads the data set from the CSV file **`ev_charging_germany.csv`** into a Pandas DataFrame named `df`. The file uses a semicolon (`;`) as a separator and UTF-8 encoding.
+
+The code then executes a **test display** function (`df.head()`) to ensure the data is loaded correctly. This displays the first five rows, allowing for easy verification of the content and structure of the DataFrame, which is a **crucial** initial step.
+Formatted Markup 3
+Markdown
+
+# 📊 Station Count per German State
+
+This section defines a function, `count_stations_per_state`, that performs the initial data aggregation.
+
+The function **totals the number of charging stations** per state (**`Bundesland`**) across Germany.
+
+### **Data Aggregation and Sorting**
+The result is stored in a Pandas Series, sorted in **descending order** to quickly identify the states with the highest number of stations.
+Formatted Markup 4
+Markdown
+
+# 📈 Visualization of State-wise Distribution
+
+This section is a **continuation** of the state-wise analysis.
+
+While the previous cell calculated and printed the raw Pandas Series of state counts, this cell:
+
+1.  Calls the **`count_stations_per_state`** function to generate the station counts.
+2.  Prints the resulting Pandas Series to the output.
+3.  Calls the **`plot_stations_per_state`** function (defined in the previous cell) to generate a **horizontal bar graph** using the Matplotlib and Seaborn libraries, visually representing the distribution from highest to lowest.
+Formatted Markup 5
+Markdown
+
+# 🗺️ Geospatial Visualization and Extremes Analysis
+
+This section defines and calls functions for in-depth statistical and geospatial analysis of the charging station distribution.
+
+### **Key Functions & Operations**
+
+* **`summarize_station_extremes(df)`**:
+    * **Statistical Summary**: Identifies and prints the German states with the **maximum** and **minimum** number of charging stations.
+* **`show_distribution_of_charging_stations(df)`**:
+    * **Geospatial Mapping**: Fetches a **GeoJSON** file containing the boundaries of all German states.
+    * **Data Merging**: Merges this geographical data with the calculated station counts.
+    * **Choropleth Map Generation**: Generates an **interactive Choropleth map**. **Darker colors** on the map indicate a **higher concentration** of charging stations, providing a clear visual representation of EV infrastructure density.
+Formatted Markup 6
+Markdown
+
+# 🏙️ Focus on Specific Cities: Excluding Majors and Analyzing Amberg
+
+This section shifts the focus from a state-level analysis to a city-level perspective, highlighting infrastructure in smaller and mid-sized locations.
+
+### **1. Top City Analysis (Excluding Majors)**
+The **`find_top_city_excluding_majors`** function:
+* Filters the dataset to **exclude major metropolitan areas** (specifically **Berlin, Hamburg, Munich, and Cologne**, including both German and English spelling variations).
+* Identifies and prints the city among the remaining locations that has the **highest number of EV charging stations**.
+* This analysis aims to identify medium or smaller cities with noteworthy EV infrastructure.
+
+### **2. Deep Dive into Amberg**
+The subsequent functions focus specifically on the city of **Amberg**:
+* **`summarize_amberg_stats`**: Calculates and prints the **total number of charging stations** and the **total maximum installed charging power** (`InstallierteLadeleistungNLL`).
+* **`plot_amberg_stations`**: Generates an **interactive Folium map** and marks the exact geographical locations of the EV charging stations within the city.
+Formatted Markup 7
+Markdown
+
+# 🔌 Identifying Top EV Charging Operators
+
+This final analysis section visualizes the key operators who contribute most significantly to Germany's EV charging infrastructure.
+
+### **Functions and Analysis Steps**
+
+The functions, `find_top_operators` and `plot_top_operators`, perform the following data manipulation steps:
+
+1.  **Grouping**: Groups the data by the **`Betreiber`** (Operator).
+2.  **Aggregation**: **Sums** the total number of charging points (**`AnzahlLadepunkteNLL`**) for each operator.
+3.  **Filtering**: Sorts the list in descending order and selects the **Top 5** operators.
+4.  **Output**: Prints the resulting list of top operators and their total points.
+5.  **Visualization**: Generates a **horizontal bar plot** to visualize the ranking of the top operators.
+3. Final Project Summary Markdown Cell
+Markdown
+
+# 🎉 Conclusion and Acknowledgements
+
+This marks the end of the **Electric Vehicle (EV) Charging Infrastructure Analysis in Germany** project.
+
+The analysis provided a comprehensive look at the distribution of charging stations, from a high-level state-by-state view down to a deep dive into specific cities, and identified the key commercial contributors (operators) to the network.
+
+***
+
+## **Project Team**
+* **Sathwik Nagasundra Sharma** (<s.nagasundra-sharma@oth-aw.de>)
+* **Sai Surya Alla** (<s.alla@oth-aw.de>)
+
+***
+
+## **Acknowledgements**
+We extend our sincere thanks to **Prof. Dr. Sandra Rebholz** and **Prof. Dr.-Ing. Alexander Prinz** for providing us with this valuable project opportunity. We also acknowledge the invaluable support received from **Stack Overflow** and **Reddit** forums for assistance in troubleshooting issues, and **Large Language Models (LLM)** for supporting content improvisation and refinement.
+
+***
+
+## **Project Resources**
+
+| Resource Type | Link |
+| :--- | :--- |
+| **GitHub Repository** | [www.github.com/Sath/PRS](www.github.com/Sath/PRS) |
+| **References Page** | [www.github.com/Sath/PRS/references](www.github.com/Sath/PRS/references) |
+| **AI/LLM Usage Declaration** | [www.github.com/Sath/PRS/AI and LLM Usage Declaration document](www.github.com/Sa
