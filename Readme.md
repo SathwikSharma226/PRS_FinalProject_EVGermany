@@ -101,7 +101,6 @@ my-data-analysis-project/
 
 3. Run the Analysis
 
-
     You can run the analysis via Jupyter Notebook or you can use the functions that are present in analysis_functions.py file and build upon this project.
 
 ```
