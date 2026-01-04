@@ -1,7 +1,5 @@
 # Electric Vehicle Charging Analysis - Bavaria
 
-This is a Data Analysis and visualization project which explores distribution, density and dominance of Electric Vehicle charging stations across Germany, at present focused case study is on the city of Amberg, Bavaria.
-
 ## Table of Contents
 
 - [ Project Overview](#-project-overview)
