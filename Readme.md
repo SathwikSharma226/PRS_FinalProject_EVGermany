@@ -2,8 +2,6 @@
 
 This is a Data Analysis and visualization project which explores distribution, density and dominance of Electric Vehicle charging stations across Germany, at present focused case study is on the city of Amberg, Bavaria.
 
-
-
 ## Table of Contents
 
 - [ Project Overview](#-project-overview)
@@ -17,7 +15,8 @@ This is a Data Analysis and visualization project which explores distribution, d
 - [ Author](#-author)
 - [ License](#-license)
 
-##  Project Overview
+## Project Overview
+
 As a part of the **Programming Starters Course** of the **MSc. Artificial Intelligence in Industrial Application Bridge Semester 2025–2026**, this project aims to offer **thorough and data-driven insights into Germany's Electric Vehicle Charging Infrastructure**.
 
 This project primarily focuses on analyzing the **distribution, accessibility, and capacity of charging networks**, which can provide crucial information for the structuring of **urban planning** and support Germany’s transition toward a **cleaner mobility solution**.
@@ -26,9 +25,7 @@ The dataset used in this project is sourced from the **official network of the F
 
 The project follows a **modular function-based approach**, allowing components to be reused in future analyses and ensuring **long-term usability**. Additionally, the project is designed to offer **flexibility**, enabling changes to the dataset with **minimal global modifications**.
 
-
-
-##  Objectives
+## Objectives
 
 Analyze the geographical distribution of charging stations across 16 federal states of Germany.
 
@@ -42,43 +39,38 @@ Identifying the top 5 operators who are managing most of the charging points.
 
 Visualizing data using Bar charts, and folium Interactive Maps.
 
-
-
-
-##  Dataset
+## Dataset
 
 This Analaysis is based on the Dataset given below
 
-* **File Name:** `ev_charging_germany.csv`
-* **Source:** Public EV infrastructure data (e.g. Bundesland).
-* **Format:** CSV (Semicolon `;` separated)
-* **Encoding:** UTF-8
+- **File Name:** `ev_charging_germany.csv`
+- **Source:** Public EV infrastructure data (e.g. Bundesland).
+- **Format:** CSV (Semicolon `;` separated)
+- **Encoding:** UTF-8
 
+## Key Variables
 
-##  Key Variables
-
-| Column Name | Description |
-| :--- | :--- |
-| `Bundesland` | German State (e.g., Bayern, Berlin) |
-| `Ort` | City / Municipality |
-| `Betreiber` | Charging Station Operator |
-| `AnzahlLadepunkteNLL` | Number of Charging Points per Station |
-| `InstallierteLadeleistungNLL` | Installed Charging Power (kW) |
-| `Breitengrad` | Latitude (Geospatial) |
-| `Laengengrad` | Longitude (Geospatial) |
+| Column Name                   | Description                           |
+| :---------------------------- | :------------------------------------ |
+| `Bundesland`                  | German State (e.g., Bayern, Berlin)   |
+| `Ort`                         | City / Municipality                   |
+| `Betreiber`                   | Charging Station Operator             |
+| `AnzahlLadepunkteNLL`         | Number of Charging Points per Station |
+| `InstallierteLadeleistungNLL` | Installed Charging Power (kW)         |
+| `Breitengrad`                 | Latitude (Geospatial)                 |
+| `Laengengrad`                 | Longitude (Geospatial)                |
 
 ---
 
-##  Technologies Used
+## Technologies Used
 
 The project is built using **Python 3.x** and the following libraries:
 
-* **Data Manipulation:** `pandas`,`numpy`
-* **Visualization:** `matplotlib`,`seaborn`
-* **Geospatial Analysis:** `geopandas`,`folium`
+- **Data Manipulation:** `pandas`,`numpy`
+- **Visualization:** `matplotlib`,`seaborn`
+- **Geospatial Analysis:** `geopandas`,`folium`
 
-
-##  Project Structure
+## Project Structure
 
 ```text
 my-data-analysis-project/
@@ -98,9 +90,7 @@ my-data-analysis-project/
 
 ```
 
-
-##  Installation
-
+## Installation
 
 ```bash
 1. Clone the git repository
@@ -111,7 +101,7 @@ my-data-analysis-project/
 2. Install Dependencies
 
     pip install pandas numpy matplotlib seaborn geopandas folium
-    or 
+    or
     pip install -r requirements.txt
 
 3. Run the Analysis
@@ -122,7 +112,7 @@ my-data-analysis-project/
 
 ```
 
-##  Analysis & Workflow
+## Analysis & Workflow
 
     1. Data loading
 
@@ -132,13 +122,12 @@ my-data-analysis-project/
 
     4. Handling missing values and data types
 
+## Authors
 
-
-##  Authors
     Sathwik Nagasundara Sharma
 
     Alla Sai Surya (s.alla@oth-aw.de)
 
 ## License
 
-    This project is purely for educational and academic purposes only and licensed under MIT-lICENSE.
+    This project is purely for educational and academic purposes only and no license is required.
