@@ -83,9 +83,10 @@ my-data-analysis-project/
 │   └── analysis_functions.py
 │
 ├── requirements.txt
-├── LICENSE
-├── Markupfile.txt
+├── AI_Usage_Declaration.txt
+├── PRS_Presentation_EVGermany.pptx
 ├── PRS_Final_Project_v1.1.ipynb
+├── References.docx
 └── Readme.md
 
 ```
