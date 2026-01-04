@@ -27,17 +27,14 @@ The project follows a **modular function-based approach**, allowing components t
 
 ## Objectives
 
-Analyze the geographical distribution of charging stations across 16 federal states of Germany.
+This analysis is structured to provide empirical and data-driven answers to the following key research questions:
 
-Finding the states having maximum number and minimum density of stations.
-
-Select the top medium sized cities excluding popular cities like Berlin, Munich, Hamburg and cologne.
-
-Analayse about Amberg by examining total number of power stations, power output and location mapping.
-
-Identifying the top 5 operators who are managing most of the charging points.
-
-Visualizing data using Bar charts, and folium Interactive Maps.
+1. Charging Station Distribution Across German States
+   Which of the german states has the most charging stations? (highest/lowest density of charging stations per region - suggested framework: scikit-learn) Prove it with meaningful visualization(s).
+2. City-Level Charging Infrastructure Analysis
+   Which city has the most charging stations in Germany (besides Berlin, Hamburg, Munich and Cologne)? In total, how many charging stations does the city of Amberg have and how much energy can be charged at max?
+3. Charging Station Operators in Germany
+   What are the 5 most prominent charging station operators in Germany and how many electric vehicles can each of them charge at once?
 
 ## Dataset
 
