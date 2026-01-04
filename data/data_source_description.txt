@@ -1,0 +1,5 @@
+Data Source Description
+
+The dataset provides detailed information on charging stations in Germany, including attributes such as station ID, operator details, address (street, postal code, city, state), geographic coordinates (latitude and longitude), commissioning date, installed charging power, type of charging facility, number of charging points, and use case classification. The data is useful for analyzing the distribution, capacity, and operational characteristics of electric vehicle charging infrastructure.
+
+Source: https://d1269bxe5ubfat.cloudfront.net/bnetzalsr/data/ladestationFactTable.csv?v=1
