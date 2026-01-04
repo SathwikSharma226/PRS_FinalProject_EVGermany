@@ -94,7 +94,6 @@ my-data-analysis-project/
 1. Clone the git repository
 
     git clone https://github.com/SathwikSharma226/PRS_FinalProject_DataViz
-    cd ev-charging-germany
 
 2. Install Dependencies
 
@@ -104,9 +103,8 @@ my-data-analysis-project/
 
 3. Run the Analysis
 
-    python prs_german_charging_stations.py
 
-    You can run the analysis via a Python script or Jupyter Notebook
+    You can run the analysis via Jupyter Notebook or you can use the functions that are present in analysis_functions.py file and build upon this project.
 
 ```
 
